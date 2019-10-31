@@ -1,3 +1,4 @@
+""" /*
 This is a blockchain.  Blocks in a blockchain hold a datetime stamp, the data in question, and a hash
 of the PREVIOUS block's datetime + data
 
@@ -10,3 +11,10 @@ machines txt files.
 
 In terms of security, we will define a function that checks the hashes of all blocks and makes sure
 that there hasn't been any tampering with the blockchain in any way.
+
+*/
+ """
+
+class Blockchain:
+    blockchain = []
+    
