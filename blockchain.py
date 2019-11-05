@@ -51,13 +51,16 @@ class Block:
 
     #this is for getting the hash of THIS block.
     #this will only be used by SUBSEQUENT blocks to get the hash that they will carry. 
-    def hashThisBlock():
+    def hashThisBlock(self):
         #first, we'll concatenate the datetime and data together
         data = toJSON(self.data) #convert the data to JSON 
-        datetime = self.datetime.strftime("%c") #this converts datetime to a readable string
+        datetime = self.datetime 
+        print("TYPE DATA: ", type(data))
+        print("TYPE DATETIME: ", type(datetime))
         contents = data + datetime 
+        contents = contents.encode('utf-8') #gotta encode before we hash
         hashBlock = hashlib.md5(contents) #hash the stuff 
-        return hashBlock #spit it out 
+        return hashBlock.hexdigest() #spit it out in a readable fashion
 
 def createBlock(datetime, data, hashBlock):
 #global base dictionary for a block
