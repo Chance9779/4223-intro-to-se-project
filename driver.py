@@ -8,11 +8,6 @@ from the blockchain.txt file.
 
 import json
 
-#open our file
-file = open("blockchain.txt", 'r')
-
-#grab the json from the file
-fileContents = file.read()
 
 #this converts the blockchain from JSON
 def fromJSON():
@@ -23,6 +18,3 @@ def fromJSON():
 def toJSON(content):
     content = json.dumps(content)
     return content
-
-#close the file
-file.close()

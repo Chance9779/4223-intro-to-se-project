@@ -2,6 +2,9 @@
 
 import socket 
 import sys  
+import atexit
+import json
+
 
 #first we're gonna make a socket
 def startListening():
@@ -30,12 +33,34 @@ def startListening():
         
         #receive the information from another machine
         content = c.recv(1023) #max size of the thing
-        print(content.decode())
+        print("received: ", content.decode())
+
+        content = content.decode() #decode to something we can actually use.
+        #Remember, this will be returned as a string
         
         s.close() #close the socket
         return content
 
-startListening()
+#this will update the blockchain txt file whenever a block get's sent
+def updateBlockchain(block):
+    file = open("blockchain.txt", 'r') #open the txt file
+    #grab the json from the file
+    fileContents = file.read()
+    if fileContents:
+        blockList = json.loads(fileContents) #convert the json from string to an object
+    else:
+        blockList = []
+    file.close()
+    
+    #now we got something useable
+    blockList.append(block)
+    #we append the block to the blocklist
+    #then put the blocklist back
+    blockList = json.dumps(blockList)
+    file = open("blockchain.txt", "w") #open the file for writing
+    file.write(blockList) #write to the file
+    #yay, we're done
+    file.close()
 
 
-
+    
