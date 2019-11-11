@@ -18,6 +18,7 @@ from driver import *
 import datetime
 import hashlib
 
+<<<<<<< HEAD
 #blockchain class
 class Blockchain:
     #this will hold the blockchain as it is
@@ -44,6 +45,9 @@ class Blockchain:
         return
 
 #this will hold the contents inside our
+=======
+#this will hold the contents inside our blockchain
+>>>>>>> 2a1ed39585c27887a16f4e020a59a953d14c941f
 class Block:
     block = {} #block is a dictionary
     datetime = None #datetime
@@ -64,11 +68,19 @@ class Block:
     #this will only be used by SUBSEQUENT blocks to get the hash that they will carry.
     def hashThisBlock(self):
         #first, we'll concatenate the datetime and data together
+<<<<<<< HEAD
         data = toJSON(self.data) #convert the data to JSON
         datetime = self.datetime
         print("TYPE DATA: ", type(data))
         print("TYPE DATETIME: ", type(datetime))
         contents = data + datetime
+=======
+        data = toJSON(self.data) #convert the data to JSON 
+        datetime = self.datetime 
+        #print("TYPE DATA: ", type(data))
+        #print("TYPE DATETIME: ", type(datetime))
+        contents = data + datetime 
+>>>>>>> 2a1ed39585c27887a16f4e020a59a953d14c941f
         contents = contents.encode('utf-8') #gotta encode before we hash
         hashBlock = hashlib.md5(contents) #hash the stuff
         return hashBlock.hexdigest() #spit it out in a readable fashion
@@ -80,7 +92,7 @@ def createBlock(datetime, data, hashBlock):
         "data": None,
         "hashBlock": None
     }
-    block['datetime'] = datetime.strftime("%c")
+    block['datetime'] = datetime
     block['data'] = data
     block['hashBlock'] = hashBlock
     return block
