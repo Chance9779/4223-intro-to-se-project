@@ -32,8 +32,8 @@ class DaemonThread(Thread):
 aDaemonThread = DaemonThread()
 
 aDaemonThread.daemon = True
-
+#starts the background listening
 aDaemonThread.start()
-for i in range(1,10):
-    print("My Daemon will take care")
-    time.sleep(10) 
+
+#MAIN
+#------------------------------------------------------

@@ -41,9 +41,11 @@ class transaction:
         print("\n\n")
 
     def makeBlock(self):
-        dataDict = {"total": 0, "items": []}
+        dataDict = {"storeId": 0, "transactionId": 0, "total": 0, "items": []}
         dataDict["total"] = self.total
         dataDict["items"] = self.items
+        dataDict['storeId'] = self.storeId 
+        dataDict['transactionId'] = self.transactionId
         #got the data dictionary
         #now let's get the previous hash
         file = open("blockchain.txt", "r") #open the file
@@ -58,6 +60,7 @@ class transaction:
         datetime = self.dateTime 
         #now let's create a block out of it and return it
         newBlock = createBlock(datetime, dataDict, hashBlock)
+        file.close() #close the file
         return newBlock
 
     
