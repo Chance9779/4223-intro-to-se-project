@@ -1,5 +1,5 @@
 from blockchain import *
-from driver import * 
+from driver import *
 from receiver import *
 import datetime
 import json
@@ -12,7 +12,6 @@ import time
 
 newTransaction = transaction(1, 1)
 newTransaction.setTransaction()
-newBlock = newTransaction.makeBlock()
+newBlock = # NOTE: wTransaction.makeBlock()
 print(newBlock)
 updateBlockchain(newBlock)
-
