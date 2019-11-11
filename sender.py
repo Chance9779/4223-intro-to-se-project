@@ -19,5 +19,3 @@ def sendUpdate(block):
     # close the connection 
     s.close()   
 
-block = "Hey, this is updated"
-sendUpdate(block)
