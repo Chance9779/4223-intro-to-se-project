@@ -18,21 +18,7 @@ from driver import *
 import datetime
 import hashlib
 
-#blockchain class
-class Blockchain:
-    #this will hold the blockchain as it is
-    blockchain = []
-    
-    #constructor
-    def __init__(self):
-        self.blockchain = fromJSON() #this loads our blockchain from the blockchain.txt file
-
-    #just an easy way of converting the blockchain to a string
-    def __str__(self):
-        blockchain = toJSON(self.blockchain)
-        return blockchain
-
-#this will hold the contents inside our 
+#this will hold the contents inside our blockchain
 class Block:
     block = {} #block is a dictionary
     datetime = None #datetime
@@ -55,8 +41,8 @@ class Block:
         #first, we'll concatenate the datetime and data together
         data = toJSON(self.data) #convert the data to JSON 
         datetime = self.datetime 
-        print("TYPE DATA: ", type(data))
-        print("TYPE DATETIME: ", type(datetime))
+        #print("TYPE DATA: ", type(data))
+        #print("TYPE DATETIME: ", type(datetime))
         contents = data + datetime 
         contents = contents.encode('utf-8') #gotta encode before we hash
         hashBlock = hashlib.md5(contents) #hash the stuff 
@@ -69,7 +55,7 @@ def createBlock(datetime, data, hashBlock):
         "data": None,
         "hashBlock": None
     }
-    block['datetime'] = datetime.strftime("%c")
+    block['datetime'] = datetime
     block['data'] = data
     block['hashBlock'] = hashBlock 
     return block
