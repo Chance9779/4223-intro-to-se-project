@@ -34,12 +34,13 @@ class Blockchain:
 
     # searches blockchain by date
     # takes in start and end date and checks against blockchain for matching blocks
-    def search_date():
+    def search_date(self, start, end):
         return
 
     # searches blockchain by id
     # takes in transaction id and checks against blockchain for matching blocks
     def search_id(self, id):
+        
         return
 
 #this will hold the contents inside our
