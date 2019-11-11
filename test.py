@@ -47,7 +47,7 @@ aDaemonThread = DaemonThread()
 aDaemonThread.daemon = True
 
 aDaemonThread.start()
-for i in range(1,2):
+for i in range(1,10):
     print("My Daemon will take care")
     time.sleep(10) 
 
