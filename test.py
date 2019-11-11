@@ -12,6 +12,6 @@ import time
 
 newTransaction = transaction(1, 1)
 newTransaction.setTransaction()
-newBlock = # NOTE: wTransaction.makeBlock()
+newBlock = newTransaction.makeBlock()
 print(newBlock)
 updateBlockchain(newBlock)
