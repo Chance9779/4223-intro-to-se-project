@@ -18,36 +18,7 @@ from driver import *
 import datetime
 import hashlib
 
-<<<<<<< HEAD
-#blockchain class
-class Blockchain:
-    #this will hold the blockchain as it is
-    blockchain = []
-
-    #constructor
-    def __init__(self):
-        self.blockchain = fromJSON() #this loads our blockchain from the blockchain.txt file
-
-    #just an easy way of converting the blockchain to a string
-    def __str__(self):
-        blockchain = toJSON(self.blockchain)
-        return blockchain
-
-    # searches blockchain by date
-    # takes in start and end date and checks against blockchain for matching blocks
-    def search_date(self, start, end):
-        return
-
-    # searches blockchain by id
-    # takes in transaction id and checks against blockchain for matching blocks
-    def search_id(self, id):
-        
-        return
-
-#this will hold the contents inside our
-=======
 #this will hold the contents inside our blockchain
->>>>>>> 2a1ed39585c27887a16f4e020a59a953d14c941f
 class Block:
     block = {} #block is a dictionary
     datetime = None #datetime
@@ -68,19 +39,11 @@ class Block:
     #this will only be used by SUBSEQUENT blocks to get the hash that they will carry.
     def hashThisBlock(self):
         #first, we'll concatenate the datetime and data together
-<<<<<<< HEAD
         data = toJSON(self.data) #convert the data to JSON
         datetime = self.datetime
-        print("TYPE DATA: ", type(data))
-        print("TYPE DATETIME: ", type(datetime))
-        contents = data + datetime
-=======
-        data = toJSON(self.data) #convert the data to JSON 
-        datetime = self.datetime 
         #print("TYPE DATA: ", type(data))
         #print("TYPE DATETIME: ", type(datetime))
-        contents = data + datetime 
->>>>>>> 2a1ed39585c27887a16f4e020a59a953d14c941f
+        contents = data + datetime
         contents = contents.encode('utf-8') #gotta encode before we hash
         hashBlock = hashlib.md5(contents) #hash the stuff
         return hashBlock.hexdigest() #spit it out in a readable fashion
