@@ -2,7 +2,7 @@
 This is a blockchain.  Blocks in a blockchain hold a datetime stamp, the data in question, and a hash
 of the PREVIOUS block's datetime + data
 
-We're gonna hold our blockchain in a txt file on the machine.  This is gonna be a list of dictionaries 
+We're gonna hold our blockchain in a txt file on the machine.  This is gonna be a list of dictionaries
 that's converted to a JSON string to hold it.  When we need it, we'll just pull it out of JSON format from the txt file.
 
 Storing it in a txt file allows us to hold the txt file on seperate machines.  Each machine will have its own
@@ -22,7 +22,7 @@ import hashlib
 class Blockchain:
     #this will hold the blockchain as it is
     blockchain = []
-    
+
     #constructor
     def __init__(self):
         self.blockchain = fromJSON() #this loads our blockchain from the blockchain.txt file
@@ -32,7 +32,17 @@ class Blockchain:
         blockchain = toJSON(self.blockchain)
         return blockchain
 
-#this will hold the contents inside our 
+    # searches blockchain by date
+    # takes in start and end date and checks against blockchain for matching blocks
+    def search_date():
+        return
+
+    # searches blockchain by id
+    # takes in transaction id and checks against blockchain for matching blocks
+    def search_id(self, id):
+        return
+
+#this will hold the contents inside our
 class Block:
     block = {} #block is a dictionary
     datetime = None #datetime
@@ -50,16 +60,16 @@ class Block:
         return str(self.block)
 
     #this is for getting the hash of THIS block.
-    #this will only be used by SUBSEQUENT blocks to get the hash that they will carry. 
+    #this will only be used by SUBSEQUENT blocks to get the hash that they will carry.
     def hashThisBlock(self):
         #first, we'll concatenate the datetime and data together
-        data = toJSON(self.data) #convert the data to JSON 
-        datetime = self.datetime 
+        data = toJSON(self.data) #convert the data to JSON
+        datetime = self.datetime
         print("TYPE DATA: ", type(data))
         print("TYPE DATETIME: ", type(datetime))
-        contents = data + datetime 
+        contents = data + datetime
         contents = contents.encode('utf-8') #gotta encode before we hash
-        hashBlock = hashlib.md5(contents) #hash the stuff 
+        hashBlock = hashlib.md5(contents) #hash the stuff
         return hashBlock.hexdigest() #spit it out in a readable fashion
 
 def createBlock(datetime, data, hashBlock):
@@ -71,7 +81,5 @@ def createBlock(datetime, data, hashBlock):
     }
     block['datetime'] = datetime.strftime("%c")
     block['data'] = data
-    block['hashBlock'] = hashBlock 
+    block['hashBlock'] = hashBlock
     return block
-
-        
