@@ -2,12 +2,46 @@ from blockchain import *
 from driver import * 
 import datetime
 import json
+from threading import Thread
 
-#just a test file to see if functions and such are working
+import os
 
-block = createBlock(datetime.datetime.now(), "this is our data", "fdfd;aksd202101012e3")
+import time
 
-block = Block(block)
-hashThing = block.hashThisBlock() 
-print(block)
-print("HASH: ", hashThing)
+ 
+
+# class defining Daemon Thread
+
+class DaemonThread(Thread):
+
+ 
+
+    # Daemon Thread constructor
+
+    def __init__(self):
+
+        Thread.__init__(self)
+
+ 
+
+    # Daemon Thread run method
+
+    def run(self):
+
+        for i in range(1,10):
+
+            print("I am the daemon thread. I keep on running bg...hehe")
+
+            time.sleep(2)
+
+ 
+
+# Main thread
+
+aDaemonThread = DaemonThread()
+
+aDaemonThread.daemon = True
+
+aDaemonThread.start()
+for i in range(1,10):
+    print("My Daemon will take care")
