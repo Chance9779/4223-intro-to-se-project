@@ -8,7 +8,7 @@ def sendUpdate(block):
     s = socket.socket()          
     
     # our port number 
-    port = 8000              
+    port = 8000         
     
     # connect to the listener
     s.connect(('127.0.0.1', port)) 
@@ -19,5 +19,5 @@ def sendUpdate(block):
     # close the connection 
     s.close()   
 
-block = "SENT THIS"
+block = "Hey, this is updated"
 sendUpdate(block)

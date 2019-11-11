@@ -1,5 +1,6 @@
 from blockchain import *
 from driver import * 
+from receiver import *
 import datetime
 import json
 from threading import Thread
@@ -28,12 +29,15 @@ class DaemonThread(Thread):
 
     def run(self):
 
-        for i in range(1,10):
-
-            print("I am the daemon thread. I keep on running bg...hehe")
-
-            time.sleep(2)
-
+        #listen for another machine
+        while True:
+            try:
+                update = startListening()
+                updateBlockchain(update)
+                continue #continue this infinitely
+            except:
+                print("Something went wrong receiving. Closing")
+                exit()
  
 
 # Main thread
@@ -45,3 +49,6 @@ aDaemonThread.daemon = True
 aDaemonThread.start()
 for i in range(1,10):
     print("My Daemon will take care")
+    time.sleep(10) 
+
+
