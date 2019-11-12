@@ -2,6 +2,23 @@ from blockchain import *
 import datetime
 import json
 
+#find the transaction id by going through the blockchain txt file
+def setTransactionId():
+    file = open("blockchain.txt", "r")
+    fileContents = file.read()
+    if not fileContents: #file is empty
+        transactionId = 1
+        return transactionId
+        file.close()
+    else:
+        blockchain = json.loads(fileContents) #turn it into a usable object
+        currentBlock = blockchain[-1] #get the last block
+        currentData = currentBlock['data']
+        currentTransactionId = currentData['transactionId']
+        newTransactionId = currentTransactionId + 1
+        file.close()
+        return newTransactionId #return the new transaction ID
+
 #this is gonna be our transaction class where users will make a transaction
 
 class transaction:
@@ -10,13 +27,15 @@ class transaction:
     total = 0
     storeId = None
     transactionId = None 
-    def __init__(self, storeId, transactionId):
+    def __init__(self, storeId):
         self.storeId = storeId
-        self.transactionId = transactionId 
         dateTime = datetime.datetime.now()
         self.dateTime = dateTime.strftime("%c")
         self.total = 0
         self.items = []
+        self.transactionId = setTransactionId()
+
+
     
     def setTransaction(self):
         print("please enter the items you wish to add to the transaction")
