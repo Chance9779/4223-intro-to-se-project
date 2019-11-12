@@ -2,6 +2,23 @@ from blockchain import *
 import datetime
 import json
 
+#find the transaction id by going through the blockchain txt file
+def setTransactionId():
+    file = open("blockchain.txt", "r")
+    fileContents = file.read()
+    if not fileContents: #file is empty
+        transactionId = 1
+        return transactionId
+        file.close()
+    else:
+        blockchain = json.loads(fileContents) #turn it into a usable object
+        currentBlock = blockchain[-1] #get the last block
+        currentData = currentBlock['data']
+        currentTransactionId = currentData['transactionId']
+        newTransactionId = currentTransactionId + 1
+        file.close()
+        return newTransactionId #return the new transaction ID
+
 #this is gonna be our transaction class where users will make a transaction
 
 class transaction:
@@ -10,22 +27,38 @@ class transaction:
     total = 0
     storeId = None
     transactionId = None 
-    def __init__(self, storeId, transactionId):
+    def __init__(self, storeId):
         self.storeId = storeId
-        self.transactionId = transactionId 
         dateTime = datetime.datetime.now()
-        self.dateTime = dateTime.strftime("%c")
+        self.dateTime = dateTime.strftime('%b %d %Y %I:%M%p')
         self.total = 0
         self.items = []
+        self.transactionId = setTransactionId()
+
+
     
     def setTransaction(self):
         print("please enter the items you wish to add to the transaction")
-        print("When you are done type 0")
-        userInput = input("") #grab the user Input
+        print("When you are done type exit")
         items = []
-        while(userInput != "0"):
-            items.append(userInput)
-            userInput = input("")
+        while(True):
+            userInputString = ""
+            userInput = list(map(str,input("").split()))
+            #make a string out of the list
+            for x in range(len(userInput)):
+                userInputString = userInputString + " " + userInput[x]
+            print("user string:", userInputString)
+            if(userInputString == " exit"):
+                #print("GOT HERE")
+                if(len(items) > 0):
+                    break
+                else:
+                    print("must have at least one item.")
+                    continue
+            else:
+                print("added item:", userInputString)
+                items.append(userInputString)
+                continue
         self.items = items #change the item list to this one
         print("\n\n")
         print("Please type the total of the transaction")

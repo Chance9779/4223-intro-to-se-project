@@ -1,0 +1,1 @@
+[{"datetime": "Nov 12 2019 03:52PM", "data": {"storeId": 3, "transactionId": 1, "total": 10.0, "items": [" soy milk"]}, "hashBlock": 0}, {"datetime": "Nov 12 2019 03:53PM", "data": {"storeId": 3, "transactionId": 2, "total": 25.0, "items": [" paint brushes"]}, "hashBlock": "5bcda1e9b0b1780d483e5808ee262550"}]

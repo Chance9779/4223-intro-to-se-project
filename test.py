@@ -5,13 +5,17 @@ import datetime
 import json
 from threading import Thread
 from transaction import *
+from searchById import *
+from search_date import *
+from sender import *
 
 import os
 
 import time
 
-newTransaction = transaction(1, 1)
+newTransaction = transaction(3)
 newTransaction.setTransaction()
 newBlock = newTransaction.makeBlock()
-print(newBlock)
-updateBlockchain(newBlock)
+
+#now let's send it through the pipeline
+sendUpdate(newBlock)

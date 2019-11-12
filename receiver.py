@@ -10,9 +10,9 @@ import json
 def startListening():
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #create a TCP socket
-        print ("Socket successfully created")
+        #print ("Socket successfully created")
     except:
-        print("socket creation failed.  Exiting")
+        #print("socket creation failed.  Exiting")
         exit()
 
     #this is gonna be our port.  
@@ -24,16 +24,16 @@ def startListening():
     # this makes the server listen to requests  
     # coming from other machines on the network 
     s.bind(('', port))         
-    print ("socket binded to %s" %(port))
+    #print ("socket binded to %s" %(port))
 
     while True:
         s.listen(5) #listen for others on the network
         c, addr = s.accept() #accept a connection if one is available
-        print("accepted connection from", addr)
+        #print("accepted connection from", addr)
         
         #receive the information from another machine
         content = c.recv(1023) #max size of the thing
-        print("received: ", content.decode())
+        #print("received: ", content.decode())
 
         content = content.decode() #decode to something we can actually use.
         #Remember, this will be returned as a string
@@ -53,6 +53,7 @@ def updateBlockchain(block):
     file.close()
     
     #now we got something useable
+    print("BLOCKLIST TYPE: ", type(blockList))
     blockList.append(block)
     #we append the block to the blocklist
     #then put the blocklist back
