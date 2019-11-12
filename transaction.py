@@ -30,7 +30,7 @@ class transaction:
     def __init__(self, storeId):
         self.storeId = storeId
         dateTime = datetime.datetime.now()
-        self.dateTime = dateTime.strftime("%c")
+        self.dateTime = dateTime.strftime('%b %d %Y %I:%M%p')
         self.total = 0
         self.items = []
         self.transactionId = setTransactionId()
@@ -39,12 +39,26 @@ class transaction:
     
     def setTransaction(self):
         print("please enter the items you wish to add to the transaction")
-        print("When you are done type 0")
-        userInput = input("") #grab the user Input
+        print("When you are done type exit")
         items = []
-        while(userInput != "0"):
-            items.append(userInput)
-            userInput = input("")
+        while(True):
+            userInputString = ""
+            userInput = list(map(str,input("").split()))
+            #make a string out of the list
+            for x in range(len(userInput)):
+                userInputString = userInputString + " " + userInput[x]
+            print("user string:", userInputString)
+            if(userInputString == " exit"):
+                #print("GOT HERE")
+                if(len(items) > 0):
+                    break
+                else:
+                    print("must have at least one item.")
+                    continue
+            else:
+                print("added item:", userInputString)
+                items.append(userInputString)
+                continue
         self.items = items #change the item list to this one
         print("\n\n")
         print("Please type the total of the transaction")
