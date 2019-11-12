@@ -2,6 +2,7 @@ from blockchain import *
 import datetime
 import json
 from transaction import *
+import datetime
 
 
 #this will search by storeId and return a list of objects with that storeId
@@ -65,7 +66,7 @@ def searchByTransactionId(transactionId):
 #this will turn it into a pretty string
 def viewSearch(searchResults):
     if not searchResults: #searchResults didn't exist
-        print("I'm sorry, there are no blocks in our chain. Closing")
+        print("I'm sorry, there are no transactions matching these parameters.")
         return None
     
     if (searchResults[0] == None):
