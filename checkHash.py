@@ -2,6 +2,9 @@ import json
 import datetime
 from blockchain import *
 from transaction import *
+import socket 
+import sys  
+
 
 '''
 Check hash
@@ -25,7 +28,10 @@ this function is going to take in a block to update every other machine on the s
 def updateOtherBlockchains(block):
     #these are our machines on the network by port number
     machines = [8001, 8002] #this is the main machine, it won't send an update to itself.
-    #this list will change depending on what machine you're looking at the code in         
+    #this list will change depending on what machine you're looking at the code in  
+           
+    #remember, we'll be getting a block.  We need to convert it to json
+    block = json.dumps(block)
     
     # our port number 
     for x in range(len(machines)):
@@ -35,9 +41,6 @@ def updateOtherBlockchains(block):
     
         # connect to the listener
         s.connect(('127.0.0.1', port)) 
-
-        #remember, we'll be getting a block.  We need to convert it to json
-        block = json.dumps(block)
         # receive data from the server 
         s.send(block.encode())
         print("sent contents to machine: ", x, " Closing")

@@ -4,6 +4,7 @@ import socket
 import sys  
 import atexit
 import json
+from sender import *
 
 
 #first we're gonna make a socket
@@ -62,37 +63,51 @@ def startListeningForChecks():
     s.bind(('', port))         
     #print ("socket binded to %s" %(port))
 
-    #------------------------------------------------------------------
-    newBlockchain = [] #this is a buffer to store the receiving dicts in
-
-    #the other machine will send multiple dictionaries until it sends an
-    #end which will be the string "0"
-
+    #-----------------------------------------------------------------
     while True:
         s.listen(5) #listen for others on the network
         c, addr = s.accept() #accept a connection if one is available
         #print("accepted connection from", addr)
         
-        #receive the information from another machine
-        while True:
-            content = c.recv(1023) #max size of the thing
-            #print("received: ", content.decode())
+        #get the port from the other machine
+        content = c.recv(1023) #max size of the thing
 
-            content = content.decode() #decode to something we can actually use.
-            #Remember, this will be returned as a string
-            #print("GOT: ", content)
-            if(content == "0"):
-                #we got to the end. break
-                #print("GOT END ACK.  Leaving")
-                break
-            
-            #this will be a json object, throw it into the newBlockchain
-            content = json.loads(content)
-            newBlockchain.append(content)
+        newPort = content.decode() #decode it into a port number
+        newPort = int(newPort)
 
+
+        s.close()
+        break
+
+    file = open("blockchain.txt", "r")
+    fileContents = file.read()
+
+        # Create the socket again
+    s = socket.socket()              
+    
+    # connect to the listener
+    s.connect(('127.0.0.1', newPort)) 
+
+    #send the file contents
+    if fileContents: #the fileContents
+        fileContents = json.loads(fileContents)
+        #print("fileContents: ", fileContents)
+        for x in range(len(fileContents)):
+            block = fileContents[x]
+            block = json.dumps(block)
+            s.send(block.encode())
+            #print("SENT: ", block)
         
-        s.close() #close the socket
-        return newBlockchain #will return the whole blockchain
+        #got to the end. send a 0
+    block = "\0"
+    #print("SENT: ", block, "ENDED")
+    #s.send(block.encode())
+    s.close()
+
+    print("sent check.")
+
+
+
 
 #this will update the blockchain txt file whenever a block get's sent
 def updateBlockchain(block):
@@ -106,7 +121,7 @@ def updateBlockchain(block):
     file.close()
     
     #now we got something useable
-    print("BLOCKLIST TYPE: ", type(blockList))
+    #print("BLOCKLIST TYPE: ", type(blockList))
     blockList.append(block)
     #we append the block to the blocklist
     #then put the blocklist back
