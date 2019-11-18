@@ -5,11 +5,13 @@ from transaction import *
 from searchById import *
 from search_date import *
 from threading import Thread
+from checkHash import *
+from admin import *
 
 
 # class defining Daemon Thread
 
-class DaemonThread(Thread):
+class listeningForUpdatesThread(Thread):
 
  
 
@@ -32,17 +34,49 @@ class DaemonThread(Thread):
                 updateBlockchain(update)
                 continue #continue this infinitely
             except:
-                print("Something went wrong receiving. Closing")
+                print("Something went wrong receiving for updating. Closing")
+                exit()
+
+class listeningForChecksThread(Thread):
+
+ 
+
+    # Daemon Thread constructor
+
+    def __init__(self):
+
+        Thread.__init__(self)
+
+    # Daemon Thread run method
+
+    def run(self):
+        #this is an inherent function.  It will be called
+        #when start() is called on the daemon thread.
+        #listen for another machine
+        while True:
+            try:
+                update = startListeningForChecks()
+                continue #continue this infinitely
+            except:
+                print("Something went wrong receiving for checking. Closing")
                 exit()
  
 
 # Main thread
 
-aDaemonThread = DaemonThread()
+#listen for updates
+listeningforUpdatesThread = listeningForUpdatesThread()
 
-aDaemonThread.daemon = True
+listeningforUpdatesThread.daemon = True
 #starts the background listening
-aDaemonThread.start()
+listeningforUpdatesThread.start()
+
+#now listen for checks
+listeningforChecksThread = listeningForChecksThread()
+
+listeningforChecksThread.daemon = True
+#starts the background listening
+listeningforChecksThread.start()
 
 #MAIN
 #------------------------------------------------------
@@ -54,11 +88,15 @@ while(True):
     if(userInput == "0"):
         exit()
     #check the password
-    elif(userInput != "12345"):
-        print("that was the wrong password.  Please try again.")
-        continue 
+    elif(userInput == "admin"):
+        #admin stuff
+        adminView()
+        continue
     elif(userInput == "12345"):
         break
+    else:
+        print("that was the wrong password.  Please try again.")
+        continue
 
 #we got past the password checker
 
@@ -90,6 +128,7 @@ while(True):
         newTransaction.setTransaction()
         newBlock = newTransaction.makeBlock()
         updateBlockchain(newBlock)
+        updateOtherBlockchains(newBlock)
         continue
     #*********************************************************
     elif(userInput == 's'):

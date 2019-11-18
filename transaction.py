@@ -47,7 +47,7 @@ class transaction:
             #make a string out of the list
             for x in range(len(userInput)):
                 userInputString = userInputString + " " + userInput[x]
-            print("user string:", userInputString)
+            #print("user string:", userInputString)
             if(userInputString == " exit"):
                 #print("GOT HERE")
                 if(len(items) > 0):

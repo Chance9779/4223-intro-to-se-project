@@ -14,6 +14,7 @@ import os
 
 import time
 
-newBlockchain = startListeningForChecks()
-#print("got blockchain: ", newBlockchain)
-checkOtherMachineBlockchain(newBlockchain)
+newBlockchain = getBlockchainFromMachine(9000, 9002)
+#print(newBlockchain)
+result = checkOtherMachineBlockchain(newBlockchain)
+print(result)

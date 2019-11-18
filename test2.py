@@ -14,4 +14,4 @@ import os
 
 import time
 
-sendCheck(9000)
+startListeningForChecks()
