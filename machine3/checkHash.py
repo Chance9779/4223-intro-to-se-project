@@ -27,7 +27,7 @@ this function is going to take in a block to update every other machine on the s
 #this function will take in a fully complete block
 def updateOtherBlockchains(block):
     #these are our machines on the network by port number
-    machines = [8001, 8002] #this is the main machine, it won't send an update to itself.
+    machines = [8000, 8001] #this is the main machine, it won't send an update to itself.
     #this list will change depending on what machine you're looking at the code in  
            
     #remember, we'll be getting a block.  We need to convert it to json
