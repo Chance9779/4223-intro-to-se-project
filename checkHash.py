@@ -2,8 +2,8 @@ import json
 import datetime
 from blockchain import *
 from transaction import *
-import socket 
-import sys  
+import socket
+import sys
 
 
 '''
@@ -28,24 +28,47 @@ this function is going to take in a block to update every other machine on the s
 def updateOtherBlockchains(block):
     #these are our machines on the network by port number
     machines = [8001, 8002] #this is the main machine, it won't send an update to itself.
-    #this list will change depending on what machine you're looking at the code in  
-           
+    #this list will change depending on what machine you're looking at the code in
+
     #remember, we'll be getting a block.  We need to convert it to json
     block = json.dumps(block)
-    
-    # our port number 
+
+    # our port number
     for x in range(len(machines)):
             # Create the socket
-        s = socket.socket() 
-        port = machines[x]         
-    
+        s = socket.socket()
+        port = machines[x]
+
         # connect to the listener
-        s.connect(('127.0.0.1', port)) 
-        # receive data from the server 
+        s.connect(('127.0.0.1', port))
+        # receive data from the server
         s.send(block.encode())
         print("sent contents to machine: ", x, " Closing")
-    # close the connection 
-        s.close()   
+    # close the connection
+        s.close()
+
+#this function will take in a fully complete block
+def overwriteOtherBlockchains(block):
+    #these are our machines on the network by port number
+    machines = [8051, 8052] #this is the main machine, it won't send an update to itself.
+    #this list will change depending on what machine you're looking at the code in
+
+    #remember, we'll be getting a block.  We need to convert it to json
+    block = json.dumps(block)
+
+    # our port number
+    for x in range(len(machines)):
+            # Create the socket
+        s = socket.socket()
+        port = machines[x]
+
+        # connect to the listener
+        s.connect(('127.0.0.1', port))
+        # receive data from the server
+        s.send(block.encode())
+        print("sent contents to machine: ", x, " Closing")
+    # close the connection
+        s.close()
 
 #each machine will be listening on port 900(whatever number they are)
 #this port is different than the updateBlockchain port. Remember
@@ -58,7 +81,7 @@ def checkOtherMachineBlockchain(otherBlockchain):
 
     if (len(fileContents) != len(otherBlockchain)):
         print("blockchains are not of the same length.")
-        return
+        return 0
 
     #we have the other blockchain, so let's compare with their blocks
     for x in range(len(fileContents)):
@@ -91,4 +114,3 @@ def checkHash(mainBlock, newBlock):
         return 0
     else:
         return 1
-    

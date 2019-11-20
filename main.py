@@ -13,7 +13,7 @@ from admin import *
 
 class listeningForUpdatesThread(Thread):
 
- 
+
 
     # Daemon Thread constructor
 
@@ -39,7 +39,7 @@ class listeningForUpdatesThread(Thread):
 
 class listeningForChecksThread(Thread):
 
- 
+
 
     # Daemon Thread constructor
 
@@ -60,7 +60,28 @@ class listeningForChecksThread(Thread):
             except:
                 print("Something went wrong receiving for checking. Closing")
                 exit()
- 
+
+class listeningForOverwritesThread(Thread):
+
+    # Thread constructor
+    def __init__(self):
+        Thread.__init__(self)
+
+    # Thread run method
+    def run(self):
+        # another inherent function, also called when start() is called on the
+        # daemon thread.
+        # listen for any overwrite messages from other machines (by admins)
+        while True:
+            try:
+                overwrite = startListeningForOverwrites()
+                overwrite = json.loads(overwrite)
+                overwriteBlockchain(overwrite)
+                continue # continue infinitely
+            except:
+                print("Something went wrong trying to overwrite the blockchain. Closing")
+                exit()
+
 
 # Main thread
 
@@ -77,6 +98,13 @@ listeningforChecksThread = listeningForChecksThread()
 listeningforChecksThread.daemon = True
 #starts the background listening
 listeningforChecksThread.start()
+
+# listen for overwrite messages from admins
+listeningForOverwritesThread = listeningForOverwritesThread()
+
+listeningForOverwritesThread.daemon = True
+# start in the background
+listeningForOverwritesThread.start()
 
 #MAIN
 #------------------------------------------------------
@@ -122,7 +150,7 @@ while(True):
     #
     #************************TODO****************************
     # this must be updated or put into a function so that it can
-    # send updated blocks to the other machine's in the 
+    # send updated blocks to the other machine's in the
     elif(userInput == 't'):
         newTransaction = transaction(1) #our store number is 1
         newTransaction.setTransaction()
@@ -132,7 +160,7 @@ while(True):
         continue
     #*********************************************************
     elif(userInput == 's'):
-        #this is the search tree.  This will continue until the user backs out of it 
+        #this is the search tree.  This will continue until the user backs out of it
         while(True):
             print("Type 'd' to search by date, 's' to search by store ID, or 't' to search by transaction id. (type 0 to return to main screen)")
             check = input("")
@@ -174,5 +202,3 @@ while(True):
     else:
         print("that character was not accepted.")
         continue
-
-        
