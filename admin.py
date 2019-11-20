@@ -35,11 +35,8 @@ def adminView():
                     print("Blockchains match.")
                     continue
                 else:
-                    print("Blockchains do not match. Updating other machines to match this blockchain.")
-                    file = open("blockchain.txt", "r")
-                    fileContents = file.read()
-                    fileContents = json.loads(fileContents)
-                    overwriteOtherBlockchains(fileContents)
+                    print("Blockchains do not match.")
+                    continue
             else:
                 print("something went wrong.")
                 continue
