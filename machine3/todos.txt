@@ -1,0 +1,7 @@
+TODOS:                                                              done:
+
+1.  Full block creation with user input                                 n
+2.  Gui to hold block data and allow searches                           n
+3.  Search functions specifically (reverse search)                      n
+4.  sender/receiver for block data                                      almost
+5.  Multithreaded program to allow for background listening             n (optional)
